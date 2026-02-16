@@ -21,6 +21,14 @@ public class Bullet : GameObject
     {
         Position += dir * SPEED * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+        foreach (var enemy in World.Enemies)
+            if (enemy.Rectangle.Intersects(Rectangle))
+            {
+                enemy.TakeDamage(1);
+                World.RemoveBullet(this);
+                return;
+            }
+
         if ((lifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds) <= 0)
             World.RemoveBullet(this);
     }

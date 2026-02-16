@@ -94,6 +94,8 @@ public class Enemy : GameObject
     public void TakeDamage(int damage)
     {
         health -= damage;
+        if (health <= 0)
+            World.RemoveEnemy(this);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -101,11 +103,12 @@ public class Enemy : GameObject
         spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White,
         0f, Vector2.Zero, flip, 0f);
 
-        var healthBarPos = new Vector2(Rectangle.Left, Rectangle.Bottom + UI_SPACING);
+        float healthBarWidth = Size.X - 4 * SIZE_MOD;
+        var healthBarPos = new Vector2(Rectangle.Left + 2 * SIZE_MOD, Rectangle.Bottom + UI_SPACING);
         spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
-        (int)Size.X, HEALTH_BAR_Y_SIZE), Color.Black);
+        (int)healthBarWidth, HEALTH_BAR_Y_SIZE), Color.Black);
 
-        int healthScaleWidth = (int)(Size.X * (health / (float)MAX_HEALTH));
+        int healthScaleWidth = (int)(healthBarWidth * (health / (float)MAX_HEALTH));
         spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
         healthScaleWidth, HEALTH_BAR_Y_SIZE), Color.LightGreen);
     }

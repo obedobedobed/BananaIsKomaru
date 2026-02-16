@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using static BananaIsKomaru.GameParameters;
 
 namespace BananaIsKomaru;
 
@@ -29,6 +30,7 @@ public class Game1 : Game
 
         // TODO: use this.Content to load your game content here
 
+        Text.Setup(new Atlas(Content.Load<Texture2D>("Sprites/Font"), (GlyphSize / TEXT_MOD).ToPoint()), GlyphSize.ToPoint());
         SceneManager.Load(new GameScene(spriteBatch, graphics), Content);
     }
 

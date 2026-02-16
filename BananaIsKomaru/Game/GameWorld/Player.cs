@@ -18,6 +18,8 @@ public class Player : GameObject
 
     // Combat
     private Gun gun;
+    private const int MAX_HEALTH = 5;
+    private int health = MAX_HEALTH;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -119,10 +121,16 @@ public class Player : GameObject
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White,
         0f, Vector2.Zero, flip, 0f);
         gun.Draw(spriteBatch);
+        
     }
 }
