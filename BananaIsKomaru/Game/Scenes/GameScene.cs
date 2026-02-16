@@ -12,6 +12,7 @@ public class GameScene(SpriteBatch s, GraphicsDeviceManager g) : Scene(s, g)
     public Player Player { get; private set; }
     private Enemy testEnemy;
     private List<Bullet> bullets = new List<Bullet>();
+    public static Texture2D pixel;
 
     public override void Load(ContentManager Content)
     {
@@ -23,6 +24,8 @@ public class GameScene(SpriteBatch s, GraphicsDeviceManager g) : Scene(s, g)
 
         var enemyAtlas = new Atlas(Content.Load<Texture2D>("Sprites/Enemy"), (EnemySize / SIZE_MOD).ToPoint());
         testEnemy = new Enemy(enemyAtlas, new Vector2(500, 200), EnemySize, 0);
+
+        pixel = Content.Load<Texture2D>("Sprites/Pixel");
     }
 
     public override void Update(GameTime gameTime)

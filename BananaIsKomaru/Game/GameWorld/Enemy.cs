@@ -17,7 +17,8 @@ public class Enemy : GameObject
     private int lastFrame = 0;
 
     // Combat
-    
+    private const int MAX_HEALTH = 5;
+    private int health = MAX_HEALTH;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -32,9 +33,6 @@ public class Enemy : GameObject
 
     // Game
     private float deltaTime = 0f;
-
-    // Input
-    private MouseState lastMouse;
 
     public Enemy(Atlas atlas, Vector2 position, Vector2 size, int defaultFrame = 0)
     : base(atlas, position, size, defaultFrame) { }
@@ -93,9 +91,22 @@ public class Enemy : GameObject
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White,
         0f, Vector2.Zero, flip, 0f);
+
+        var healthBarPos = new Vector2(Rectangle.Left, Rectangle.Bottom + UI_SPACING);
+        spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
+        (int)Size.X, HEALTH_BAR_Y_SIZE), Color.Black);
+
+        int healthScaleWidth = (int)(Size.X * (health / (float)MAX_HEALTH));
+        spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
+        healthScaleWidth, HEALTH_BAR_Y_SIZE), Color.LightGreen);
     }
 }

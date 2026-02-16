@@ -6,6 +6,8 @@ public static class GameParameters
 {
     public const int SIZE_MOD = 4;
     public const float FRAME_TIME = 0.15f;
+    public const int UI_SPACING = 2 * SIZE_MOD;
+    public const int HEALTH_BAR_Y_SIZE = 4 * SIZE_MOD;
     public static readonly Vector2 PlayerSize = new Vector2(16, 16) * SIZE_MOD;
     public static readonly Vector2 EnemySize = new Vector2(16, 16) * SIZE_MOD;
     public static readonly Vector2 GunSize = new Vector2(8, 8) * SIZE_MOD;
