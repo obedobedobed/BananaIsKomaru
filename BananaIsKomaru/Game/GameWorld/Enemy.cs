@@ -19,6 +19,8 @@ public class Enemy : GameObject
     // Combat
     private const int MAX_HEALTH = 5;
     private int health = MAX_HEALTH;
+    private const float IMMORTAL_TIME = 0.4f;
+    private float immortalTime = 0f;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -40,6 +42,7 @@ public class Enemy : GameObject
     public void Update(GameTime gameTime, Player player)
     {
         deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        immortalTime -= deltaTime;
 
         Move(player);
         Animate();
@@ -93,15 +96,20 @@ public class Enemy : GameObject
 
     public void TakeDamage(int damage)
     {
+        if (immortalTime > 0)
+            return;
+
         health -= damage;
+        immortalTime = IMMORTAL_TIME;
+
         if (health <= 0)
             World.RemoveEnemy(this);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White,
-        0f, Vector2.Zero, flip, 0f);
+        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], immortalTime <= 0 ? Color.White :
+        new Color(255, 50, 50), 0f, Vector2.Zero, flip, 0f);
 
         float healthBarWidth = Size.X - 4 * SIZE_MOD;
         var healthBarPos = new Vector2(Rectangle.Left + 2 * SIZE_MOD, Rectangle.Bottom + UI_SPACING);

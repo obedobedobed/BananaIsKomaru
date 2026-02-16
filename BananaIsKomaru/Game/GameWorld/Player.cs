@@ -18,8 +18,10 @@ public class Player : GameObject
 
     // Combat
     private Gun gun;
-    private const int MAX_HEALTH = 5;
+    private const int MAX_HEALTH = 10;
     private int health = MAX_HEALTH;
+    private const float IMMORTAL_TIME = 0.4f;
+    private float immortalTime = 0f;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -47,6 +49,7 @@ public class Player : GameObject
     public override void Update(GameTime gameTime)
     {
         deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        immortalTime -= deltaTime;
 
         GetInput();
         Move();
@@ -123,14 +126,19 @@ public class Player : GameObject
 
     public void TakeDamage(int damage)
     {
+        if (immortalTime > 0)
+            return;
+
         health -= damage;
+        immortalTime = IMMORTAL_TIME;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White,
-        0f, Vector2.Zero, flip, 0f);
+        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], immortalTime <= 0 ? Color.White :
+        new Color(255, 50, 50), 0f, Vector2.Zero, flip, 0f);
         gun.Draw(spriteBatch);
-        
+        Text.Draw($"{health}/{MAX_HEALTH} HP", new Vector2(10, 10), health > MAX_HEALTH / 2 ? Color.LightGreen : 
+        Color.Red, spriteBatch, TextDrawingMode.Right, true, Color.Black);
     }
 }

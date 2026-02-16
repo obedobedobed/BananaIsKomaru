@@ -41,8 +41,6 @@ public class GameScene(SpriteBatch s, GraphicsDeviceManager g) : Scene(s, g)
 
         Player.Draw(SpriteBatch);
         World.Draw(SpriteBatch);
-        Text.Draw("Hello World! 123 test :)", new Vector2(50, 50), Color.White, SpriteBatch, TextDrawingMode.Right,
-        true, Color.Black);
 
         SpriteBatch.End();
     }
