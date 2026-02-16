@@ -6,7 +6,7 @@ namespace BananaIsKomaru;
 
 public class Bullet : GameObject
 {
-    private const float SPEED = 250f;
+    private const float SPEED = 95f * SIZE_MOD;
     private Vector2 dir;
     private float rot;
     private float lifeTime = 1.5f;
