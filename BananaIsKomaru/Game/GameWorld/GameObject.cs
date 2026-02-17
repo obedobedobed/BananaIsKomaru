@@ -36,4 +36,11 @@ public class GameObject
         else
             spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], Color.White);
     }
+
+    public bool IsObjectInRadius(GameObject obj, float radius)
+    {
+        var distance = (obj.Position + obj.Size / 2) - (Position + Size / 2);
+
+        return distance.LengthSquared() <= radius;
+    }
 }

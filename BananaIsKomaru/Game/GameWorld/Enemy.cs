@@ -21,6 +21,7 @@ public class Enemy : GameObject
     private int health = MAX_HEALTH;
     private const float IMMORTAL_TIME = 0.4f;
     private float immortalTime = 0f;
+    private const float ATTACK_RADIUS = 15f * SIZE_MOD;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -43,6 +44,9 @@ public class Enemy : GameObject
     {
         deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
         immortalTime -= deltaTime;
+
+        if (IsObjectInRadius(player, ATTACK_RADIUS))
+            player.TakeDamage(1);
 
         Move(player);
         Animate();
