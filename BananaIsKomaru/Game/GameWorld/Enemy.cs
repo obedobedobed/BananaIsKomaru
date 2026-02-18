@@ -21,7 +21,7 @@ public class Enemy : GameObject
     private int health = MAX_HEALTH;
     private const float IMMORTAL_TIME = 0.4f;
     private float immortalTime = 0f;
-    private const float ATTACK_RADIUS = 15f * SIZE_MOD;
+    private const float ATTACK_RADIUS = 10f * SIZE_MOD;
 
     // Frames
     private const int IDLE_0 = 0;
@@ -112,16 +112,20 @@ public class Enemy : GameObject
 
     public override void Draw(SpriteBatch spriteBatch)
     {
+        var centeredPos = Position + Size / 2;
+        spriteBatch.Draw(GameScene.Circle, new Rectangle((int)(centeredPos.X - ATTACK_RADIUS),
+        (int)(centeredPos.Y - ATTACK_RADIUS), (int)ATTACK_RADIUS * 2, (int)ATTACK_RADIUS * 2), new Color(0, 0, 0, 50));
+
         spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], immortalTime <= 0 ? Color.White :
-        new Color(255, 50, 50), 0f, Vector2.Zero, flip, 0f);
+        new Color(255, 50, 50), 0f, Vector2.Zero, flip, Layer);
 
         float healthBarWidth = Size.X - 4 * SIZE_MOD;
         var healthBarPos = new Vector2(Rectangle.Left + 2 * SIZE_MOD, Rectangle.Bottom + UI_SPACING);
-        spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
+        spriteBatch.Draw(GameScene.Pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
         (int)healthBarWidth, HEALTH_BAR_Y_SIZE), Color.Black);
 
         int healthScaleWidth = (int)(healthBarWidth * (health / (float)MAX_HEALTH));
-        spriteBatch.Draw(GameScene.pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
+        spriteBatch.Draw(GameScene.Pixel, new Rectangle((int)healthBarPos.X, (int)healthBarPos.Y,
         healthScaleWidth, HEALTH_BAR_Y_SIZE), Color.LightGreen);
     }
 }

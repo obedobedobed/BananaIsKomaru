@@ -151,7 +151,7 @@ public static class Text
     }
 
     public static void Draw(string text, Vector2 position, Color color, SpriteBatch spriteBatch, TextDrawingMode drawingMode,
-    bool outline = false, Color outlineColor = new Color())
+    float layer, bool outline = false, Color outlineColor = new Color())
     {
         int glyphPosition = drawingMode switch
         {
@@ -192,11 +192,12 @@ public static class Text
                         spriteBatch.Draw(glyphes.Texture, new Rectangle
                         (glyphRectangle.X + point.X, glyphRectangle.Y + point.Y,
                         glyphRectangle.Width, glyphRectangle.Height),
-                        glyphes.Rectangles[glyphId], outlineColor);
+                        glyphes.Rectangles[glyphId], outlineColor, 0f, Vector2.Zero,
+                        SpriteEffects.None, layer - 0.01f);
                 }
 
                 spriteBatch.Draw(glyphes.Texture, glyphRectangle,
-                glyphes.Rectangles[glyphId], color);
+                glyphes.Rectangles[glyphId], color, 0f, Vector2.Zero, SpriteEffects.None, layer);
             }
 
             glyphPosition += glyphWidth;

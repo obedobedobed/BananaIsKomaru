@@ -131,14 +131,21 @@ public class Player : GameObject
 
         health -= damage;
         immortalTime = IMMORTAL_TIME;
+
+        if (health <= 0)
+            GameScene.Instance.GameOver = true;
     }
 
     public override void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], immortalTime <= 0 ? Color.White :
-        new Color(255, 50, 50), 0f, Vector2.Zero, flip, 0f);
-        gun.Draw(spriteBatch);
         Text.Draw($"{health}/{MAX_HEALTH} HP", new Vector2(10, 10), health > MAX_HEALTH / 2 ? Color.LightGreen : 
-        Color.Red, spriteBatch, TextDrawingMode.Right, true, Color.Black);
+        Color.Red, spriteBatch, TextDrawingMode.Right, 1f, true, Color.Black);
+
+        if (GameScene.Instance.GameOver)
+            return;
+
+        spriteBatch.Draw(Atlas.Texture, Rectangle, Atlas.Rectangles[Frame], immortalTime <= 0 ? Color.White :
+        new Color(255, 50, 50), 0f, Vector2.Zero, flip, Layer);
+        gun.Draw(spriteBatch, Layer);
     }
 }

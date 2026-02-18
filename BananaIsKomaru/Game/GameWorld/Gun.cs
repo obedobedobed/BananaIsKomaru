@@ -37,9 +37,9 @@ public class Gun(Texture2D texture, Texture2D bulletTexture)
         ((float)Math.Cos(rotation), (float)Math.Sin(rotation)), rot: rotation));
     }
 
-    public override void Draw(SpriteBatch spriteBatch)
+    public void Draw(SpriteBatch spriteBatch, float layer)
     {
         spriteBatch.Draw(Texture, Rectangle, new Rectangle(0, 0, (int)Size.X / SIZE_MOD, (int)Size.Y / SIZE_MOD),
-        Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), flip, 0f);
+        Color.White, rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), flip, layer);
     }
 }
