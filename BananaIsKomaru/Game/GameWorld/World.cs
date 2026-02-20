@@ -34,6 +34,20 @@ public static class World
         enemiesToRemove.Add(enemy);
     }
 
+    // Walls
+    public static List<Wall> Walls { get; private set; } = new List<Wall>();
+    private static List<Wall> wallsToRemove = new List<Wall>();
+    
+    public static void AddWall(Wall wall)
+    {
+        Walls.Add(wall);
+    }
+
+    public static void RemoveWall(Wall wall)
+    {
+        wallsToRemove.Add(wall);
+    }
+
     // Update/Draw
     public static void Update(GameTime gameTime)
     {
